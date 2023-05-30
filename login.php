@@ -13,35 +13,33 @@ $gclient->setRedirectUri('http://localhost/auth/login.php');
 $gclient->addScope('email');
 $gclient->addScope('profile');
 
-if(isset($_GET['code'])){
+if (isset($_GET['code'])) {
 
-    $token = $gclient->fetchAccessTokenWithAuthCode($_GET['code']);
+  $token = $gclient->fetchAccessTokenWithAuthCode($_GET['code']);
 
-    if(!isset($token['error'])){
+  if (!isset($token['error'])) {
 
-        $gclient->setAccessToken($token['access_token']);
+    $gclient->setAccessToken($token['access_token']);
 
-        $_SESSION['access_token'] = $token['access_token'];
+    $_SESSION['access_token'] = $token['access_token'];
 
-        $gservice = new Google_Service_Oauth2($gclient);
+    $gservice = new Google_Service_Oauth2($gclient);
 
-        $udata = $gservice->userinfo->get();
-        
-        $_SESSION['userData'] = $udata;
+    $udata = $gservice->userinfo->get();
 
-        foreach($udata as $k => $v){
-            $_SESSION['login_'.$k] = $v;
-        }
-        $_SESSION['ucode'] = $_GET['code'];
+    $_SESSION['userData'] = $udata;
 
-        header('location: ./');
-        exit;
-    }
+    $_SESSION['userCode'] = $_GET['code'];
+
+    header('location: ./');
+    exit;
+  }
 }
 
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>Login Page</title>
   <link rel="stylesheet" type="text/css" href="style.css">
@@ -49,6 +47,7 @@ if(isset($_GET['code'])){
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <script src="https://kit.fontawesome.com/4e25ff9c4f.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
   <div class="container">
     <div class="login-box">
@@ -69,15 +68,16 @@ if(isset($_GET['code'])){
           <span>or</span>
         </div>
         <div class="input-group">
-        <a style="text-decoration: none;" href="<?= $gclient->createAuthUrl() ?>">
-          <button type="button" class="google-button">  
-            <i class="fa-brands fa-google"></i> Sign in with Google
-          </button>
-        </a>
-         
+          <a style="text-decoration: none;" href="<?= $gclient->createAuthUrl() ?>">
+            <button type="button" class="google-button">
+              <i class="fa-brands fa-google"></i> Sign in with Google
+            </button>
+          </a>
+
         </div>
       </form>
     </div>
   </div>
 </body>
+
 </html>
