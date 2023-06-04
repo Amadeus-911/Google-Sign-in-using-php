@@ -1,0 +1,13 @@
+{
+    "web":
+        {
+            "client_id":"1020136124385-4ufvv79pge22e96j5c0fkijleqo567vh.apps.googleusercontent.com",
+            "project_id":"life-good-315813","auth_uri":"https://accounts.google.com/o/oauth2/auth",
+            "token_uri":"https://oauth2.googleapis.com/token",
+            "auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs",
+            "client_secret":"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",
+            "redirect_uris":["http://localhost/auth/register.php",
+                                "http://localhost/auth/login.php",
+                                "http://localhost/auth/"]
+        }
+}
